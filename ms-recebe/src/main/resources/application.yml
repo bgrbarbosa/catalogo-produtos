@@ -1,0 +1,40 @@
+server:
+  port: 8087
+  servlet:
+    context-path: '/ms-recebe/'
+spring:
+  application:
+    name: produto-ms-recebe
+  datasource:
+    url:  jdbc:postgresql://localhost:5432/msrecebe
+    username: postgres
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      jdbc:
+        lob.non-contextual-creation: true
+    properties:
+      hibernate:
+        show_sql: true
+  output:
+    ansi:
+      enabled: Always
+  rabbitmq:
+    addresses: amqps://ukskwrie:k0430x4y2zCl3Lpcavxzb9F5xEaBPfjy@stingray.rmq.cloudamqp.com/ukskwrie
+
+produtos:
+  broker:
+    exchange:
+      EventProdutos: produtos.eventprodutos
+    queue:
+      msRecebeQueue:
+        name: produtos.eventprodutos.receber
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: 'http://localhost:8085/eureka'
+  instance:
+    hostname: localhost
