@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: produto-ms-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: ms-envio
+          uri: lb://PRODUTO-MS-ENVIO
+          predicates:
+            - Path=/ms-envio/produto/**
+        - id: ms-recebe
+          uri: lb://PRODUTO-MS-RECEBE
+          predicates:
+            - Path=/ms-recebe/produto/**
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8085/eureka
+  instance:
+    hostname: localhost
